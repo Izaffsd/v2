@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Created</title>
+    <script src="https://kit.fontawesome.com/0ede200358.js" crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui;
+        }
+
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title {
+            margin-top: 8px;
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 10px;
+            padding-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .description {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .calorie-box {
+            background-color: #f8f9fa;
+            border-radius: 16px;
+            padding: 14px;
+            text-align: center;
+            margin-bottom: 40px;
+            transition: transform 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .calorie-box:hover {
+            transform: translateY(-2px);
+        }
+
+        .calorie-label {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .calorie-value {
+            font-size: 2.6rem;
+            font-weight: bold;
+            color: #10b981;
+            margin: 10px 0;
+        }
+
+        .checkbox-container {
+            margin-bottom: 40px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .checkbox-item:hover {
+            background-color: #f1f5f9;
+            border-color: #e2e8f0;
+        }
+
+        .checkbox-wrapper {
+            position: relative;
+            width: 22px;
+            height: 22px;
+            margin-right: 15px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 22px;
+            width: 22px;
+            background-color: #fff;
+            border: 2px solid #2563eb;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-item:hover input ~ .checkmark {
+            background-color: #eef2ff;
+        }
+
+        .checkbox-item input:checked ~ .checkmark {
+            background-color: #2563eb;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 7px;
+            top: 3px;
+            width: 4px;
+            height: 9px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkbox-item input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .checkbox-item label {
+            color: #333;
+            font-size: 16px;
+            flex: 1;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .next-button {
+            background-color: #2563eb;
+            color: white;
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 20px rgba(0, 122, 255, 0.2);
+        }
+
+        .next-button:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+        }
+
+        hr {
+            position: relative;
+            border: none;
+            height: 1px;
+            background-color: #e5e7eb;
+            top: 3.6rem;
+        }
+
+        @media (max-width: 420px) {
+            .container {
+                padding: 12px;
+            }
+
+            .calorie-box {
+                padding: 12px;
+            }
+
+            .checkbox-item {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <hr>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Account Created</h1>
+            <h2 class="subtitle">Congratulations, js4vv!</h2>
+            <p class="description">Your custom plan is ready and you're one step closer to your goal weight.</p>
+        </div>
+
+        <div class="calorie-box">
+            <p class="calorie-label">Your daily net calorie goal is:</p>
+            <div class="calorie-value">1,500</div>
+            <p class="calorie-label">Calories</p>
+        </div>
+
+        <div class="checkbox-container">
+            <div class="checkbox-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="reminders" checked>
+                    <span class="checkmark"></span>
+                </div>
+                <label for="reminders">Keep me on track with reminders</label>
+            </div>
+            <div class="checkbox-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="steps" checked>
+                    <span class="checkmark"></span>
+                </div>
+                <label for="steps">Use my phone to track my steps</label>
+            </div>
+            <div class="checkbox-item">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="emails" checked>
+                    <span class="checkmark"></span>
+                </div>
+                <label for="emails">Would you like to receive our emails?</label>
+            </div>
+        </div>
+
+        <a href="dashboard.html" class="next-button">Next</a>
+    </div>
+</body>
+</html>

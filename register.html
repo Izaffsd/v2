@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join HealthierMe - Your Journey Starts Here</title>
+    <script src="https://kit.fontawesome.com/0ede200358.js" crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --primary-blue: rgb(27, 93, 236);
+            --primary-light: #3b82f6;
+            --success-green: #10b981;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+
+        .card {
+            background: var(--surface);
+            padding: 16px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 22px;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .step.active {
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--primary-blue);
+            transition: width 0.4s ease;
+        }
+
+        /* Form Styles */
+        .form-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            font-size: 16px;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--surface);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .unit {
+            position: absolute;
+            right: 16px;
+            top: 40px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .gender-group {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .gender-option {
+            flex: 1;
+            padding: 20px;
+            background: var(--surface);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .gender-option:hover {
+            border-color: var(--primary-light);
+        }
+
+        .gender-option.selected {
+            background: rgba(37, 99, 235, 0.1);
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 40px;
+        }
+
+        .btn-back {
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+            background: var(--surface);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .btn-back:hover {
+            background: var(--border-color);
+        }
+
+        .btn-next {
+            flex: 1;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 20px rgba(0, 122, 255, 0.2);
+        }
+
+        .btn-next:hover {
+            background: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        .helper-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: 8px;
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="progress-container">
+                <div class="progress-steps">
+                    <div class="step active">Basic Info</div>
+                    <div class="step">Profile</div>
+                    <div class="step">Health Data</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 33%"></div>
+                </div>
+            </div>
+
+            <form id="registration-form" method="post">
+                <!-- Section 1: Basic Info -->
+                <div class="form-section active" data-step="1">
+                    <h1>Let's get started!</h1>
+                    <p class="subtitle">Create your account to begin your health journey</p>
+                    <div class="input-group">
+                        <label>First Name</label>
+                        <input type="text" name="firstName" placeholder="Enter your first name" required>
+                        <div id="error-firstName" class="error-message"></div>
+                    </div>
+                    <div class="input-group">
+                        <label>Last Name</label>
+                        <input type="text" name="lastName" placeholder="Enter your last name" required>
+                        <div id="error-lastName" class="error-message"></div>
+                    </div>
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" name="email" placeholder="your@email.com" required>
+                        <div id="error-email" class="error-message"></div>
+                    </div>
+                    <div class="input-group">
+                        <label>Phone Number</label>
+                        <input type="number" name="phone" placeholder="Enter your phone number" required>
+                        <div id="error-phone" class="error-message"></div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Gender & Age -->
+                <div class="form-section" data-step="2">
+                    <h1>Tell us about yourself</h1>
+                    <p class="subtitle">This helps us personalize your experience</p>
+                    <div class="gender-group">
+                        <div class="gender-option" data-gender="male">Male</div>
+                        <div class="gender-option" data-gender="female">Female</div>
+                    </div>
+                    <div class="input-group">
+                        <label>Age</label>
+                        <input type="number" name="age" placeholder="Enter your age" required>
+                        <div id="error-age" class="error-message"></div>
+                        <p class="helper-text">Must be 18 or older to register</p>
+                    </div>
+                </div>
+
+                <!-- Section 3: Height & Weight -->
+                <div class="form-section" data-step="3">
+                    <h1>Almost there!</h1>
+                    <p class="subtitle">Help us understand your fitness goals better</p>
+                    <div class="input-group">
+                        <label>Height</label>
+                        <input type="number" name="height" placeholder="Enter your height" required>
+                        <span class="unit">cm</span>
+                        <div id="error-height" class="error-message"></div>
+                    </div>
+                    <div class="input-group">
+                        <label>Weight</label>
+                        <input type="number" name="weight" placeholder="Enter your weight" required>
+                        <span class="unit">kg</span>
+                        <div id="error-weight" class="error-message"></div>
+                        <p class="helper-text">You can always update this later</p>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button type="button" class="btn-back" id="btn-back"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button type="button" class="btn-next" id="btn-next">Continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentStep = 1;
+            const form = document.getElementById('registration-form');
+            const sections = document.querySelectorAll('.form-section');
+            const progress = document.querySelector('.progress');
+            const btnBack = document.getElementById('btn-back');
+            const btnNext = document.getElementById('btn-next');
+            const genderOptions = document.querySelectorAll('.gender-option');
+            const steps = document.querySelectorAll('.step');
+
+            function validateEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            genderOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    genderOptions.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                });
+            });
+
+            btnNext.addEventListener('click', () => {
+                if (currentStep < 3) {
+                    if (validateSection(currentStep)) {
+                        currentStep++;
+                        updateUI();
+                    }
+                } else {
+                    if (validateSection(currentStep)) {
+                        const formData = new FormData(form);
+                        window.location.href = 'welcome.html';
+                    }
+                }
+            });
+
+            btnBack.addEventListener('click', () => {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateUI();
+                }
+            });
+
+            function updateUI() {
+                sections.forEach(section => section.classList.remove('active'));
+                document.querySelector(`[data-step="${currentStep}"]`).classList.add('active');
+                
+                progress.style.width = `${(currentStep/3) * 100}%`;
+                btnBack.style.display = currentStep === 1 ? 'none' : 'flex';
+                btnNext.textContent = currentStep === 3 ? 'Complete Registration' : 'Continue';
+
+                steps.forEach((step, index) => {
+                    step.classList.toggle('active', index + 1 <= currentStep);
+                });
+            }
+
+            function validateSection(step) {
+                const currentSection = document.querySelector(`[data-step="${step}"]`);
+                const inputs = currentSection.querySelectorAll('input[required]');
+                let valid = true;
+
+                inputs.forEach(input => {
+                    const errorDiv = document.getElementById(`error-${input.name}`);
+                    
+                    if (!input.value) {
+                        valid = false;
+                        input.style.borderColor = '#ef4444';
+                        errorDiv.textContent = 'This field is required';
+                    } else {
+                        switch(input.name) {
+                            case 'email':
+                                if (!validateEmail(input.value)) {
+                                    valid = false;
+                                    input.style.borderColor = '#ef4444';
+                                    errorDiv.textContent = 'Please enter a valid email address';
+                                } else {
+                                    input.style.borderColor = '';
+                                    errorDiv.textContent = '';
+                                }
+                                break;
+                            case 'phone':
+                                if (input.value.length < 9) {
+                                    valid = false;
+                                    input.style.borderColor = '#ef4444';
+                                    errorDiv.textContent = 'Phone number must be at least 9 digits';
+                                } else {
+                                    input.style.borderColor = '';
+                                    errorDiv.textContent = '';
+                                }
+                                break;
+                            case 'age':
+                                if (input.value < 18) {
+                                    valid = false;
+                                    input.style.borderColor = '#ef4444';
+                                    errorDiv.textContent = 'You must be 18 or older';
+                                } else {
+                                    input.style.borderColor = '';
+                                    errorDiv.textContent = '';
+                                }
+                                break;
+                            case 'height':
+                                if (input.value < 90) {
+                                    valid = false;
+                                    input.style.borderColor = '#ef4444';
+                                    errorDiv.textContent = 'Please enter a valid height';
+                                } else {
+                                    input.style.borderColor = '';
+                                    errorDiv.textContent = '';
+                                }
+                                break;
+                            case 'weight':case 'weight':
+                                if (input.value < 15) {
+                                    valid = false;
+                                    input.style.borderColor = '#ef4444';
+                                    errorDiv.textContent = 'Please enter a valid weight';
+                                } else {
+                                    input.style.borderColor = '';
+                                    errorDiv.textContent = '';
+                                }
+                                break;
+                            default:
+                                input.style.borderColor = '';
+                                errorDiv.textContent = '';
+                        }
+                    }
+                });
+
+                if (step === 2 && !document.querySelector('.gender-option.selected')) {
+                    valid = false;
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'error-message';
+                    errorDiv.textContent = 'Please select your gender';
+                    const genderGroup = document.querySelector('.gender-group');
+                    
+                    // Remove any existing error message
+                    const existingError = genderGroup.nextElementSibling;
+                    if (existingError && existingError.classList.contains('error-message')) {
+                        existingError.remove();
+                    }
+                    
+                    genderGroup.after(errorDiv);
+                }
+
+                return valid;
+            }
+
+            // Add input event listeners for real-time validation
+            const allInputs = document.querySelectorAll('input[required]');
+            allInputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    const errorDiv = document.getElementById(`error-${input.name}`);
+                    if (input.value) {
+                        input.style.borderColor = '';
+                        errorDiv.textContent = '';
+                    }
+                });
+
+                // Add focus effects
+                input.addEventListener('focus', () => {
+                    input.style.borderColor = 'var(--primary-light)';
+                });
+
+                input.addEventListener('blur', () => {
+                    if (!input.value) {
+                        input.style.borderColor = 'var(--border-color)';
+                    }
+                });
+            });
+
+            // Add keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    btnNext.click();
+                }
+            });
+
+            // Smooth scroll to top when changing sections
+            function scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+
+            btnNext.addEventListener('click', scrollToTop);
+            btnBack.addEventListener('click', scrollToTop);
+
+            // Initialize UI
+            updateUI();
+        });
+    </script>
+</body>
+</html>

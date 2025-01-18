@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - HealthierMe</title>
+    <script src="https://kit.fontawesome.com/0ede200358.js" crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --light-bg: #f4f7fc;
+            --card-bg: #ffffff;
+            --primary-blue:  rgb(27, 93, 236);
+            --primary-yellow: rgb(27, 93, 236);
+            --text-black: #000000;
+            --text-gray: rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-black);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 430px;
+            margin: 0 auto;
+            padding: 20px 16px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .user-profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .user-profile:active {
+            transform: scale(0.95);
+        }
+
+        .user-profile i {
+            color: var(--primary-blue);
+            font-size: 20px;
+        }
+
+        .premium-button {
+            background: var(--primary-yellow);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+
+        .premium-button i {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .premium-button i:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Calories Card */
+        .calories-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .calories-header {
+            margin-bottom: 16px;
+        }
+
+        .calories-formula {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .calories-circle {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .calories-number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .calories-details {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .detail-item {
+            text-align: center;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .stats-grid .stat-card h3 i {
+            margin-left: 8px;
+            color: var(--primary-blue);
+            opacity: 0.7;
+        }
+
+        .stats-grid .stat-card button {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            line-height: 110%;
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .stats-grid .stat-card button:active {
+            transform: scale(0.95);
+        }
+
+        /* Navigation */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            padding: 16px;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .nav-bar .nav-item i {
+            font-size: 20px;
+            color: var(--text-gray);
+            transition: all 0.3s ease;
+        }
+
+        .nav-bar .nav-item.active i {
+            color: var(--primary-blue);
+            transform: scale(1.2);
+        }
+
+        .nav-bar .nav-item i:active {
+            transform: scale(0.9);
+        }
+
+        .nav-item:hover i {
+            color: var(--primary-blue);
+            opacity: 0.7;
+        }
+
+        .nav-item:active i {
+            transform: scale(0.9);
+        }
+
+        /* Search Bar */
+        .search-bar {
+            background: var(--card-bg);
+            padding: 12px 20px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            margin: 16px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar span {
+            font-size: 20px;
+            opacity: 0.6;
+        }
+
+        .search-bar input {
+            background: none;
+            border: none;
+            color: var(--text-black);
+            flex: 1;
+            margin-left: 8px;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-gray);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="user-profile"><i class="fa-regular fa-user"></i></div>
+            <a href="#" class="premium-button"><i class="fa-regular fa-bell"></i></a>                
+        </header>
+
+        <div class="calories-card">
+            <div class="calories-header">
+                <h2>Calories</h2>
+                <p class="calories-formula">Remaining = Goal - Food + Exercise</p>
+            </div>
+            
+            <div class="calories-circle">
+                <svg width="200" height="200" viewBox="0 0 200 200">
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="#ccc" stroke-width="10"/>
+                    <circle cx="100" cy="100" r=" 90" fill="none" stroke="#007BFF" stroke-width="10"
+                            stroke-dasharray="565.48" stroke-dashoffset="0"/>
+                </svg>
+                <div class="calories-number">2,621</div>
+            </div>
+
+            <div class="calories-details">
+                <div class="detail-item">
+                    <div>Base Goal</div>
+                    <strong>2,620</strong>
+                </div>
+                <div class="detail-item">
+                    <div>Food</div>
+                    <strong>0</strong>
+                </div>
+                <div class="detail-item">
+                    <div>Exercise</div>
+                    <strong>1</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Steps <i class="fa-solid fa-shoe-prints"></i></h3>
+                <div>335</div>
+                <small>Goal: 10,000 steps</small>
+            </div>
+            <div class="stat-card">
+                <h3>Exercise</h3>
+                <div>1 cal</div>
+                <button>+</button>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <span>🔍</span>
+            <input type="text" placeholder="Search for a food">
+        </div>
+
+        <nav class="nav-bar">
+            <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i></a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-face-dizzy"></i></a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-dice-d20"></i></a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-cat"></i></a>
+        </nav>
+    </div>
+</body>
+</html>
